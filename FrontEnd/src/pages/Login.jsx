@@ -111,22 +111,24 @@ function Login() {
                 <form onSubmit={handleSubmit}>
                     {/* Username */}
                     <div className="mb-4">
-                        <label className="block mb-2 text-sm font-bold text-gray-700">Username</label>
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">Username</label>
                         <input
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                            className="w-full px-3 py-2 text-sm border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                             type="text"
                             id="username"
+                            placeholder="Enter your username"
                             onChange={handleChange}
                             required
                         />
                     </div>
                     {/* Password */}
                     <div className="mb-4">
-                        <label className="block mb-2 text-sm font-bold text-gray-700">Password</label>
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">Password</label>
                         <input
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                            className="w-full px-3 py-2 text-sm border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                             type="password"
                             id="password"
+                            placeholder="Enter your password"
                             onChange={handleChange}
                             required
                         />
