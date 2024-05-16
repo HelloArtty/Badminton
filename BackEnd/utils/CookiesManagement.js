@@ -9,4 +9,8 @@ function createCookies(user_id) {
   });
 }
 
-module.exports = { createCookies };
+function decodeToken(token) {
+  return jwt.verify(token, String(process.env.secret_jwt));
+}
+
+module.exports = { createCookies, decodeToken };

@@ -6,13 +6,17 @@ const courtSchema = new Schema(
       type: String,
       require: true,
     },
+    timeslot: {
+      type: String,
+      require: true,
+    },
     isBooked: {
-      type: Email,
+      type: Boolean,
       default: false,
     },
   },
   { Timestamp: true }
 );
 
-const Court = model("User", courtSchema);
+const Court = model("Court", courtSchema);
 module.exports = Court;
