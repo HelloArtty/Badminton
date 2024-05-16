@@ -137,7 +137,7 @@ function Login() {
                         Login
                     </button>
                 </form>
-                <p className="mt-4 text-center">
+                <p className="mt-4 text-center text-sm">
                     Don't have an account? &nbsp;
                     <Link className="text-blue-600 hover:underline" to="/register">
                         Register
