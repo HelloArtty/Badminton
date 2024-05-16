@@ -2,6 +2,7 @@ const { Request, Response } = require("express");
 const jwt = require("jsonwebtoken");
 
 const { hashPassword } = require("../utils/PasswordManagement");
+const { createCookies } = require("../utils/CookiesManagement");
 const UserModel = require("../models/user");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -16,21 +17,18 @@ const registerController = async (req, res) => {
     });
     await user.save();
 
-    const playload = jwt.sign(
-      { UserID: user._id },
-      String(process.env.secret_jwt),
-      {
-        algorithm: "HS256",
-      }
-    );
+    const payload = await createCookies({ UserID: user._id });
 
-    res.cookie("token", playload, { httpOnly: true });
+    res.cookie("token", payload, { httpOnly: true });
     res.status(200).send({
       message: "User created successfully",
       user,
     });
   } catch (error) {
     console.log("Error on registerController -> ", error.message);
+    res.status(400).send({
+      message: "Error on registerController",
+    });
   }
 };
 
