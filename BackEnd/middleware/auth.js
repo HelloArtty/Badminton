@@ -24,5 +24,4 @@ const isLogin = (req, res, next) => {
   }
 };
 
-module.exports = validateToken;
-module.exports = isLogin;
+module.exports = { validateToken, isLogin };
