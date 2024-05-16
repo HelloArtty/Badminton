@@ -56,7 +56,7 @@ function Register() {
             const result = await AxiosLib.post('/backend/auth/register', createNewUser);
             console.log(result);
             if (result.status === 201) {
-                return (window.location.href = '/backend/auth/login');
+                return (window.location.href = '/backend/auth/log-in');
             }
         } catch (error) {
             if (error.response.status === 400 || error.response.status === 500 || error.response.status === 409) {
@@ -107,7 +107,6 @@ function Register() {
                                     name="username"
                                     placeholder="Enter your username"
                                     onChange={handleChange}
-                                    // variant="filled"
                                     required
                                 />
                             </div>
@@ -121,7 +120,6 @@ function Register() {
                                     name="email"
                                     placeholder="Enter your email"
                                     onChange={handleChange}
-                                    // variant="filled"
                                     required
                                 />
                             </div>
@@ -134,7 +132,6 @@ function Register() {
                                     id="password"
                                     name="password"
                                     onChange={handleChange}
-                                    // variant="filled"
                                     required
                                 />
                             </div>
@@ -147,7 +144,6 @@ function Register() {
                                     id="confirmPassword"
                                     name="confirmPassword"
                                     onChange={handleChange}
-                                    // variant="filled"
                                     required
                                 />
                             </div>
