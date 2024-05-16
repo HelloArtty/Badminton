@@ -1,13 +1,18 @@
 import { TextField } from '@mui/material';
-import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-
+import Swal from 'sweetalert2';
+import { AuthContext } from '../context/user';
+import { AxiosLib } from '../lib/axios';
 
 
 function Register() {
-    const [user, setUser] = useState({
+    const auth = useContext(AuthContext);
+    const IsLogin = auth?.authContext.IsLogin || false;
+    if (IsLogin) {
+        window.location.href = '/';
+    }
+    const [register, setRegister] = useState({
         username: '',
         email: '',
         password: '',
@@ -15,34 +20,51 @@ function Register() {
     });
 
     const handleChange = (e) => {
-        setUser({
-            ...user,
-            [e.target.id]: e.target.value,
+        setRegister({
+            ...register,
+            [e.target.name]: e.target.value
         });
-        console.log(user);
-    }
+        console.log(register);
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (user.password !== user.confirmPassword) {
-            console.error('Passwords do not match');
-            return;
-        }
         try {
-            const response = await axios.post('http://localhost:3000/register', {
-                username: user.username,
-                email: user.email,
-                password: user.password,
-            });
-            console.log(response.data);
-            // Handle registration success (e.g., redirect to login)
+            e.preventDefault();
+            if (!register.username || !register.email || !register.password || !register.confirmPassword) {
+                return Swal.fire('Error', 'Please fill all the fields', 'error');
+            } else if (!register.email.includes('@')) {
+                return Swal.fire('Error', 'Please fill email correctly', 'error');
+            } else if (register.password.length < 8) {
+                return Swal.fire('Error', 'Password must be at least 8 characters', 'error');
+            } else if (!register.password.match(/[0-9]/g)) {
+                return Swal.fire('Error', 'Password must contain at least one number', 'error');
+            } else if (!register.password.match(/[A-Z]/g)) {
+                return Swal.fire('Error', 'Password must contain at least one uppercase', 'error');
+            } else if (!register.password.match(/[a-z]/g)) {
+                return Swal.fire('Error', 'Password must contain at least one lowercase', 'error');
+            } else if (!register.password.match(/[^\w\s]/g)) {
+                return Swal.fire('Error', 'Password must contain at least one special character', 'error');
+            } else if (register.password.includes(' ')) {
+                return Swal.fire('Error', 'Password cannot contain space', 'error');
+            } else if (register.password !== register.confirmPassword) {
+                return Swal.fire('Error', 'Password must match the confirm password', 'error');
+            }
+            const createNewUser = {
+                username: register.username,
+                email: register.email,
+                password: register.password,
+            };
+            const result = await AxiosLib.post('/register', createNewUser);
+            if (result.status === 201) {
+                return (window.location.href = '/login');
+            }
         } catch (error) {
-            console.error('Registration error', error);
-            // Handle registration failure
+            if (error.response.status === 400 || error.response.status === 500 || error.response.status === 409) {
+                return Swal.fire('Error', error.response.data.message, 'error');
+            }
         }
-        console.log('Registering user', user);
-    }
-
+        console.log(register);
+    };
 
     return (
         <>
@@ -82,6 +104,7 @@ function Register() {
                                     label="Username"
                                     type="text"
                                     id="username"
+                                    name="username"
                                     placeholder="Enter your username"
                                     onChange={handleChange}
                                     // variant="filled"
@@ -95,6 +118,7 @@ function Register() {
                                     label="Email"
                                     type="email"
                                     id="email"
+                                    name="email"
                                     placeholder="Enter your email"
                                     onChange={handleChange}
                                     // variant="filled"
@@ -108,6 +132,7 @@ function Register() {
                                     label="Password"
                                     type="password"
                                     id="password"
+                                    name="password"
                                     onChange={handleChange}
                                     // variant="filled"
                                     required
@@ -120,6 +145,7 @@ function Register() {
                                     label="Confirm Password"
                                     type="password"
                                     id="confirmPassword"
+                                    name="confirmPassword"
                                     onChange={handleChange}
                                     // variant="filled"
                                     required
