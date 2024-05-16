@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../context/user';
 import { AxiosLib } from '../lib/axios';
 
-
 function Register() {
     const auth = useContext(AuthContext);
     const IsLogin = auth?.authContext.IsLogin || false;
@@ -54,9 +53,10 @@ function Register() {
                 email: register.email,
                 password: register.password,
             };
-            const result = await AxiosLib.post('/register', createNewUser);
+            const result = await AxiosLib.post('/backend/auth/register', createNewUser);
+            console.log(result);
             if (result.status === 201) {
-                return (window.location.href = '/login');
+                return (window.location.href = '/backend/auth/login');
             }
         } catch (error) {
             if (error.response.status === 400 || error.response.status === 500 || error.response.status === 409) {
