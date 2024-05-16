@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRouter = require("./routes/auth.route.js");
+
 dotenv.config();
 
 const User = require("./models/user");
@@ -23,4 +24,5 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
+app.use("/backend/auth", authRouter);
 app.use("/backend/auth", authRouter);

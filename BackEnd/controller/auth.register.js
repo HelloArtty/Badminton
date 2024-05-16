@@ -1,7 +1,7 @@
 const { Request, Response } = require("express");
 const jwt = require("jsonwebtoken");
 
-const hashPassword = require("../utils/PasswordManagement");
+const { hashPassword } = require("../utils/PasswordManagement");
 const UserModel = require("../models/user");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -30,7 +30,7 @@ const registerController = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log("Error on registerController", error.message);
+    console.log("Error on registerController -> ", error.message);
   }
 };
 

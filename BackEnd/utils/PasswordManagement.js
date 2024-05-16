@@ -4,9 +4,8 @@ async function hashPassword(password) {
   return await bcrypt.hash(password, salt); //return hashed password
 }
 
-// async function comparePassword(password, hashPassword) {
-//   return await bcrypt.compare(password, hashPassword); //return true or false
-// }
+async function comparePassword(password, hashPassword) {
+  return await bcrypt.compare(password, hashPassword); //return true or false
+}
 
-module.exports = hashPassword;
-// module.exports = comparePassword;
+module.exports = { hashPassword, comparePassword };
