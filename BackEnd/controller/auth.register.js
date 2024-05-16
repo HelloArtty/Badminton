@@ -1,18 +1,17 @@
 const { Request, Response } = require("express");
-const { hashPassword } = require("../utils/PasswordManagement");
-const UserModel = require("../models/user");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
 
+const hashPassword = require("../utils/PasswordManagement");
+const UserModel = require("../models/user");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const registerController = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    password = await hashPassword(password);
     const user = new UserModel({
       username,
-      password,
+      password: await hashPassword(password),
       email,
     });
     await user.save();
