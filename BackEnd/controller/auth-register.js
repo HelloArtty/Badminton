@@ -1,5 +1,4 @@
 const { Request, Response } = require("express");
-const jwt = require("jsonwebtoken");
 
 const { hashPassword } = require("../utils/PasswordManagement");
 const { createCookies } = require("../utils/CookiesManagement");
@@ -17,7 +16,7 @@ const registerController = async (req, res) => {
     });
     await user.save();
 
-    const payload = await createCookies({ UserID: user._id });
+    const payload = createCookies({ UserID: user._id });
 
     res.cookie("token", payload, { httpOnly: true });
     res.status(200).send({
