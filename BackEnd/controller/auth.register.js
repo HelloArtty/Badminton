@@ -27,7 +27,7 @@ const registerController = async (req, res) => {
   } catch (error) {
     console.log("Error on registerController -> ", error.message);
     res.status(400).send({
-      message: "Error on registerController",
+      message: error.message,
     });
   }
 };
