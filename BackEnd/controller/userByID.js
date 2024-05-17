@@ -1,24 +1,16 @@
 const UserModel = require("../models/user");
-const { decodeToken } = require("../utils/CookiesManagement");
 
 const userByIDController = async (req, res) => {
   try {
-    const token = req.cookies["token"];
-    if (!token) {
-      res.status(401).json({ message: "User Unauthorized" });
-    }
-    const decoded = decodeToken(token);
-    if (!decoded) {
-      res.status(401).json({ message: "User Unauthorized" });
-    }
-
-    const user = await UserModel.findById(decoded.UserID);
+    const user = await UserModel.findById(req.params.id);
     if (!user) {
       res.status(200).json({ message: "User not found" });
     }
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res
+      .status(500)
+      .json({ message: "Internal Server Error or Object ID not found" });
     console.log(error.message);
   }
 };
