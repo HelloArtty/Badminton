@@ -6,6 +6,8 @@ import { AuthContext } from '../context/user';
 import { AxiosLib } from '../lib/axios';
 
 
+
+
 function Login() {
     const auth = useContext(AuthContext)
     const IsLogin = auth?.authContext.IsLogin || false
@@ -77,7 +79,7 @@ function Login() {
                                     name="email"
                                     placeholder="Enter your email"
                                     onChange={handleChange}
-                                    required
+                                    // required
                                 />
                             </div>
                             {/* Password */}
@@ -89,7 +91,7 @@ function Login() {
                                     id="password"
                                     name="password"
                                     onChange={handleChange}
-                                    required
+                                    // required
                                 />
                             </div>
                             <button className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700">
