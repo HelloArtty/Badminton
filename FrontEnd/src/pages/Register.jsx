@@ -31,6 +31,10 @@ function Register() {
             e.preventDefault();
             if (!register.username || !register.email || !register.password || !register.confirmPassword) {
                 return Swal.fire('Error', 'Please fill all the fields', 'error');
+            }   else if (register.username.length < 6) {
+                return Swal.fire('Error', 'Username must be at least 6 characters', 'error');
+            } else if (register.username.includes(' ')) {
+                return Swal.fire('Error', 'Username cannot contain space', 'error');
             } else if (!register.email.includes('@')) {
                 return Swal.fire('Error', 'Please fill email correctly', 'error');
             } else if (register.password.length < 8) {
@@ -56,7 +60,7 @@ function Register() {
             const result = await AxiosLib.post('/backend/auth/register', createNewUser);
             console.log(result);
             if (result.status === 201) {
-                return (window.location.href = '/backend/auth/login');
+                return (window.location.href = '/backend/auth/log-in');
             }
         } catch (error) {
             if (error.response.status === 400 || error.response.status === 500 || error.response.status === 409) {
@@ -107,8 +111,7 @@ function Register() {
                                     name="username"
                                     placeholder="Enter your username"
                                     onChange={handleChange}
-                                    // variant="filled"
-                                    required
+                                    // required
                                 />
                             </div>
                             {/* Email */}
@@ -121,8 +124,7 @@ function Register() {
                                     name="email"
                                     placeholder="Enter your email"
                                     onChange={handleChange}
-                                    // variant="filled"
-                                    required
+                                    // required
                                 />
                             </div>
                             {/* Password */}
@@ -134,8 +136,7 @@ function Register() {
                                     id="password"
                                     name="password"
                                     onChange={handleChange}
-                                    // variant="filled"
-                                    required
+                                    // required
                                 />
                             </div>
                             {/* Confirm Password */}
@@ -147,8 +148,7 @@ function Register() {
                                     id="confirmPassword"
                                     name="confirmPassword"
                                     onChange={handleChange}
-                                    // variant="filled"
-                                    required
+                                    // required
                                 />
                             </div>
                             <button className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700">
