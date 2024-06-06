@@ -1,6 +1,6 @@
 const CourtModel = require("../models/court");
 
-const courtByIDController = async (req, res) => {
+const courtByID = async (req, res) => {
   try {
     const court = await CourtModel.findById(req.params.id);
     if (!court) {
@@ -15,4 +15,4 @@ const courtByIDController = async (req, res) => {
   }
 };
 
-module.exports = courtByIDController;
+module.exports = { courtByID };

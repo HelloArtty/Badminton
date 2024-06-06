@@ -42,5 +42,4 @@ const updateUserByID = async (req, res) => {
   }
 };
 
-module.exports = getUserByID;
-module.exports = updateUserByID;
+module.exports = { getUserByID, updateUserByID };
