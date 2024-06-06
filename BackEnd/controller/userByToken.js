@@ -18,4 +18,4 @@ const userByToken = async (req, res) => {
   }
 };
 
-module.exports = userByToken;
+module.exports = { userByToken };

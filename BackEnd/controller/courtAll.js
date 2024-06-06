@@ -26,6 +26,4 @@ const getCourtFree = async (req, res) => {
   }
 };
 
-// const postCourt = async (req, res) => {}
-
 module.exports = { getCourtAll, getCourtFree };

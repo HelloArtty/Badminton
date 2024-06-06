@@ -8,7 +8,6 @@ const authRouter = require("./routes/auth.route.js");
 const dataRouter = require("./routes/data.route.js");
 dotenv.config();
 
-const User = require("./models/user");
 // Connect to DB
 mongoose
   .connect(process.env.MONGO)
