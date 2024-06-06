@@ -1,16 +1,11 @@
 const UserModel = require("../models/user");
 const { decodeToken } = require("../utils/CookiesManagement");
 
-const userByTokenController = async (req, res) => {
+const userByToken = async (req, res) => {
   try {
-    const token = req.cookies["token"];
-    if (!token) {
-      res.status(401).json({ message: "User Unauthorized" });
-    }
+    // alredy validate token in middleware
+    const token = req.cookies.token;
     const decoded = decodeToken(token);
-    if (!decoded) {
-      res.status(401).json({ message: "User Unauthorized" });
-    }
 
     const user = await UserModel.findById(decoded.UserID);
     if (!user) {
@@ -23,4 +18,4 @@ const userByTokenController = async (req, res) => {
   }
 };
 
-module.exports = userByTokenController;
+module.exports = userByToken;
