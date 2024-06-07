@@ -7,7 +7,8 @@ const validateToken = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
       console.log("==== Token not found ====");
-      return res.status(401).json({ message: "Token not found" });
+      next();
+      // return res.status(401).json({ message: "Token not found" });
     }
 
     decoded = decodeToken(token);
