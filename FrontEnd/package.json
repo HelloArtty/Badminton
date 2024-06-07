@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.15.17",
     "axios": "^1.6.8",
+    "emailjs-com": "^3.2.0",
     "raviger": "^4.1.2",
     "react": "^18.2.0",
     "react-cookie": "^7.1.4",

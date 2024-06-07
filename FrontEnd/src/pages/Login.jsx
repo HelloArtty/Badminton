@@ -1,19 +1,20 @@
 import { TextField } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { AuthContext } from '../context/user';
 import { AxiosLib } from '../lib/axios';
 
 
 
-
 function Login() {
-    const auth = useContext(AuthContext)
-    const IsLogin = auth?.authContext.IsLogin || false
-    if (IsLogin) {
-        window.location.href = '/'
-    }
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
+
 
     const [login, setLogin] = useState({
         email: '',
@@ -28,7 +29,8 @@ function Login() {
         e.preventDefault()
         try {
             const result = await AxiosLib.post('/backend/auth/log-in', { email: login.email, password: login.password })
-            if (result.status === 200) return (window.location.href = '/booking')
+            if (result.status === 200)
+                window.location.href = '/booking'
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -79,7 +81,7 @@ function Login() {
                                     name="email"
                                     placeholder="Enter your email"
                                     onChange={handleChange}
-                                    // required
+                                // required
                                 />
                             </div>
                             {/* Password */}
@@ -91,7 +93,7 @@ function Login() {
                                     id="password"
                                     name="password"
                                     onChange={handleChange}
-                                    // required
+                                // required
                                 />
                             </div>
                             <button className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700">
