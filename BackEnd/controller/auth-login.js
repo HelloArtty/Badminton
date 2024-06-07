@@ -18,7 +18,7 @@ const loginController = async (req, res) => {
     const payload = createCookies({ UserID: user._id });
 
     res.cookie("token", payload, { httpOnly: true });
-    res.status(200).json({ message: "Login Success" });
+    res.status(200).json({ message: "Login Success", user: user });
   } catch (error) {
     console.log("Error on loginController -> ", error.message);
     res.status(400).json({ message: error.message });
