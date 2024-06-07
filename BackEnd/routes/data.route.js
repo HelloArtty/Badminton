@@ -12,6 +12,9 @@ const { getCourtFree } = require("../controller/courtAll");
 
 const { getBookingAll } = require("../controller/bookingAll");
 const { postBooking } = require("../controller/bookingAll");
+const { getBookingByUserID } = require("../controller/bookingAll");
+const { getBookingByID } = require("../controller/bookingByID");
+const { deleteBooking } = require("../controller/bookingByID");
 
 const router = express.Router();
 
@@ -27,6 +30,9 @@ router.get("/court-free", getCourtFree);
 
 // Booking
 router.get("/booking-all", getBookingAll);
+router.get("/booking-by-user", getBookingByUserID);
 router.post("/add-booking", validateToken, postBooking);
+router.get("/booking-by-id/:id", getBookingByID);
+router.delete("/delete-booking/:id", deleteBooking);
 
 module.exports = router;

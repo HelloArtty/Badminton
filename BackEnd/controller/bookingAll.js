@@ -48,9 +48,13 @@ const postBooking = async (req, res) => {
         .json({ message: "This court time is already booked" });
     }
 
+    // TODO:Check if the court time is already passed
+
     //get userID from token
     const decoded = decodeToken(req.cookies.token);
     const userID = decoded.UserID;
+
+    // TODO:check if user qouta is avilable
 
     const booking = new BookingModel({
       user: userID,
@@ -74,7 +78,30 @@ const postBooking = async (req, res) => {
   }
 };
 
-// const getBookingQueueByCourtID = async (req, res) => {}
-// const getBookingByUserID = async (req, res) => {}
+const getBookingByUserID = async (req, res) => {
+  try {
+    //get userID from token
+    const decoded = decodeToken(req.cookies.token);
+    const userID = decoded.UserID;
 
-module.exports = { getBookingAll, postBooking };
+    const booking = await BookingModel.find({ user: userID })
+      .populate("user")
+      .populate({
+        // populate the courtTime field inside the booking
+        path: "courtTime",
+        populate: { path: "court time" },
+      });
+
+    if (!booking) {
+      res.status(200).json({ message: "This Booking is Not found " });
+    }
+    res.status(200).json(booking);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal Server Error or Object ID not found" });
+    console.log(error.message);
+  }
+};
+
+module.exports = { getBookingAll, postBooking, getBookingByUserID };
