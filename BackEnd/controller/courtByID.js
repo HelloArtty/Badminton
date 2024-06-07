@@ -1,8 +1,10 @@
-const CourtModel = require("../models/court");
+const CourtTimeModel = require("../models/courtTime");
 
 const courtByID = async (req, res) => {
   try {
-    const court = await CourtModel.findById(req.params.id);
+    const court = await CourtTimeModel.findById(req.params.id)
+      .populate("court")
+      .populate("time");
     if (!court) {
       res.status(200).json({ message: "Not found Court at this timeslot" });
     }

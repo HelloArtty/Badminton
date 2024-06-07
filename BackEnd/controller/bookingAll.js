@@ -1,8 +1,17 @@
 const BookingModel = require("../models/booking.js");
+const CourtTimeModel = require("../models/courtTime.js");
+const { decodeToken } = require("../utils/CookiesManagement");
 
 const getBookingAll = async (req, res) => {
   try {
-    const booking = await BookingModel.find({});
+    const booking = await BookingModel.find({})
+      .populate("user")
+      .populate({
+        // populate the courtTime field inside the booking
+        path: "courtTime",
+        populate: { path: "court time" },
+      });
+
     if (!booking) {
       res.status(200).json({ message: "This Booking is Not found " });
     }
@@ -15,21 +24,50 @@ const getBookingAll = async (req, res) => {
   }
 };
 
-const postBookingAll = async (req, res) => {
+const postBooking = async (req, res) => {
   try {
-    const { courtID } = req.body;
+    const { courtID, timeID } = req.body;
 
-    const token = req.cookies.token;
-    const decoded = jwt.decode(token);
+    //get courtTimeID by search court and time
+    courtTimeQuery = await CourtTimeModel.findOne({
+      court: courtID,
+      time: timeID,
+    });
 
+    // Check if courtTimeQuery is null or undefined
+    if (!courtTimeQuery) {
+      return res.status(404).json({ message: "Court time not found" });
+    }
+
+    const courtTimeID = courtTimeQuery._id;
+
+    // Check if the court time is already booked
+    if (courtTimeQuery.isBooked) {
+      return res
+        .status(400)
+        .json({ message: "This court time is already booked" });
+    }
+
+    //get userID from token
+    const decoded = decodeToken(req.cookies.token);
     const userID = decoded.UserID;
+
     const booking = new BookingModel({
-      userID,
-      courtID,
+      user: userID,
+      courtTime: courtTimeID,
     });
 
     await booking.save();
-    res.status(201).send("Post created successfully!");
+
+    // Update isBooked in courtTime
+    await CourtTimeModel.findOneAndUpdate(
+      { _id: courtTimeID },
+      { $set: { isBooked: true } }
+    );
+
+    res
+      .status(201)
+      .json({ message: "Post created successfully!", booking: booking });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
     console.log(error.message);
@@ -39,4 +77,4 @@ const postBookingAll = async (req, res) => {
 // const getBookingQueueByCourtID = async (req, res) => {}
 // const getBookingByUserID = async (req, res) => {}
 
-module.exports = { getBookingAll, postBookingAll };
+module.exports = { getBookingAll, postBooking };

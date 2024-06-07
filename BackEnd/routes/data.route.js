@@ -10,7 +10,8 @@ const { courtByID } = require("../controller/courtByID");
 const { getCourtAll } = require("../controller/courtAll");
 const { getCourtFree } = require("../controller/courtAll");
 
-// const bookingByIDController = require("../controller/bookingByID");
+const { getBookingAll } = require("../controller/bookingAll");
+const { postBooking } = require("../controller/bookingAll");
 
 const router = express.Router();
 
@@ -24,7 +25,8 @@ router.get("/court-by-id/:id", courtByID);
 router.get("/court-all", getCourtAll);
 router.get("/court-free", getCourtFree);
 
-// // Booking
-// router.get("/booking-by-id/:id", bookingByIDController);
+// Booking
+router.get("/booking-all", getBookingAll);
+router.post("/add-booking", validateToken, postBooking);
 
 module.exports = router;

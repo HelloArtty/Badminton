@@ -1,8 +1,10 @@
-const CourtModel = require("../models/court");
+const CourtTimeModel = require("../models/courtTime");
 
 const getCourtAll = async (req, res) => {
   try {
-    const court = await CourtModel.find({});
+    const court = await CourtTimeModel.find({})
+      .populate("court")
+      .populate("time");
     if (!court) {
       res.status(200).json({ message: "Not found any Courts" });
     }
@@ -15,7 +17,9 @@ const getCourtAll = async (req, res) => {
 
 const getCourtFree = async (req, res) => {
   try {
-    const court = await CourtModel.find({ isBooked: false });
+    const court = await CourtTimeModel.find({ isBooked: false })
+      .populate("court")
+      .populate("time");
     if (!court) {
       res.status(200).json({ message: "No Courts available" });
     }

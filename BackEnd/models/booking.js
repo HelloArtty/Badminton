@@ -1,17 +1,17 @@
 const { Schema, model } = require("mongoose");
 
-const Court = require("./court");
+const CourtTime = require("./courtTime");
 const User = require("./user");
 
 const bookingSchema = new Schema(
   {
-    user_id: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    court_id: {
+    courtTime: {
       type: Schema.Types.ObjectId,
-      ref: "Court",
+      ref: "CourtTime",
     },
   },
   { Timestamp: true }
