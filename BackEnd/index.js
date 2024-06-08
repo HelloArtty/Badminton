@@ -3,6 +3,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const cron = require("node-cron");
+
+const Booking = require("./models/booking.js");
 
 const authRouter = require("./routes/auth.route.js");
 const dataRouter = require("./routes/data.route.js");
@@ -29,6 +32,18 @@ app.use(
     credentials: true,
   })
 );
+
+// Schedule the task to run at 12 PM every day
+cron.schedule("0 0 * * *", async () => {
+  try {
+    // Delete all bookings
+    const result = await Booking.deleteMany({});
+
+    console.log(`${result.deletedCount} bookings deleted.`);
+  } catch (error) {
+    console.error("Error deleting bookings: ", error);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
