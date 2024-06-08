@@ -1,5 +1,6 @@
 const BookingModel = require("../models/booking.js");
 const CourtTimeModel = require("../models/courtTime.js");
+const UserModel = require("../models/user.js");
 const { decodeToken } = require("../utils/CookiesManagement");
 
 const getBookingAll = async (req, res) => {
@@ -34,14 +35,11 @@ const postBooking = async (req, res) => {
       time: timeID,
     });
 
-    // Check if courtTimeQuery is null or undefined
     if (!courtTimeQuery) {
       return res.status(404).json({ message: "Court time not found" });
     }
 
     const courtTimeID = courtTimeQuery._id;
-
-    // Check if the court time is already booked
     if (courtTimeQuery.isBooked) {
       return res
         .status(400)
@@ -54,19 +52,32 @@ const postBooking = async (req, res) => {
     const decoded = decodeToken(req.cookies.token);
     const userID = decoded.UserID;
 
-    // TODO:check if user qouta is avilable
+    // check if user book qouta is avilable
+    const userQuery = await UserModel.findById(userID);
+    if (!userQuery) {
+      return res.status(404).json({ message: "User not found in token" });
+    }
+    if (userQuery.isBook) {
+      return res.status(400).json({ message: "User can book only 1 court" });
+    }
 
     const booking = new BookingModel({
       user: userID,
       courtTime: courtTimeID,
     });
 
-    await booking.save();
+    await booking.save(); // done add new booking
 
     // Update isBooked in courtTime
     await CourtTimeModel.findOneAndUpdate(
       { _id: courtTimeID },
       { $set: { isBooked: true } }
+    );
+
+    // Update isBook in user
+    await UserModel.findOneAndUpdate(
+      { _id: userID },
+      { $set: { isBook: true } }
     );
 
     res

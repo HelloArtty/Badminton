@@ -16,6 +16,10 @@ const userSchema = new Schema(
       type: String,
       require: true,
     },
+    isBook: {
+      type: Boolean,
+      default: false,
+    },
     img: {
       type: String,
       default:

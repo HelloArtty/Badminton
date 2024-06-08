@@ -1,5 +1,6 @@
 const BookingModel = require("../models/booking.js");
 const CourtTimeModel = require("../models/courtTime.js");
+const UserModel = require("../models/user.js");
 
 const getBookingByID = async (req, res) => {
   try {
@@ -33,10 +34,16 @@ const deleteBooking = async (req, res) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // get courtTimeID from booking and set isBooked == false
+    // update courtTime isBooked == false
     await CourtTimeModel.findOneAndUpdate(
       { _id: booking.courtTime },
       { $set: { isBooked: false } }
+    );
+
+    // update user isBook == false
+    await UserModel.findOneAndUpdate(
+      { _id: booking.user },
+      { $set: { isBook: false } }
     );
 
     res.status(200).json({ message: "Your booking deleted successfully" });
