@@ -5,7 +5,9 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const cron = require("node-cron");
 
-const Booking = require("./models/booking.js");
+const BookingModel = require("./models/booking.js");
+const CourtTimeModel = require("./models/courtTime.js");
+const UserModel = require("./models/user.js");
 
 const authRouter = require("./routes/auth.route.js");
 const dataRouter = require("./routes/data.route.js");
@@ -37,7 +39,16 @@ app.use(
 cron.schedule("0 0 * * *", async () => {
   try {
     // Delete all bookings
-    const result = await Booking.deleteMany({});
+    const result = await BookingModel.deleteMany({});
+
+    // Update all courtTime , set isBooked to false
+    const courtTimes = await CourtTimeModel.updateMany(
+      {},
+      { $set: { isBooked: false } }
+    );
+
+    // Update all user booking quota , set isBooked to false
+    const users = await UserModel.updateMany({}, { $set: { isBook: false } });
 
     console.log(`${result.deletedCount} bookings deleted.`);
   } catch (error) {
