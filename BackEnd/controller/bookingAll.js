@@ -1,7 +1,9 @@
 const BookingModel = require("../models/booking.js");
 const CourtTimeModel = require("../models/courtTime.js");
 const UserModel = require("../models/user.js");
+
 const { decodeToken } = require("../utils/CookiesManagement");
+const { sendBookingConfirmationEmail } = require("../utils/EmailManagement");
 
 const getBookingAll = async (req, res) => {
   try {
@@ -61,12 +63,12 @@ const postBooking = async (req, res) => {
       return res.status(400).json({ message: "User can book only 1 court" });
     }
 
-    const booking = new BookingModel({
+    const newBooking = new BookingModel({
       user: userID,
       courtTime: courtTimeID,
     });
 
-    await booking.save(); // done add new booking
+    await newBooking.save(); // done add new booking
 
     // Update isBooked in courtTime
     await CourtTimeModel.findOneAndUpdate(
@@ -80,9 +82,26 @@ const postBooking = async (req, res) => {
       { $set: { isBook: true } }
     );
 
-    res
-      .status(201)
-      .json({ message: "Post created successfully!", booking: booking });
+    // send confirmation email
+    const bookingDetail = await BookingModel.findById(newBooking._id)
+      .populate("user")
+      .populate({
+        path: "courtTime",
+        populate: { path: "court time" },
+      });
+
+    sendBookingConfirmationEmail(
+      bookingDetail.user.email,
+      bookingDetail.user.username,
+      bookingDetail.courtTime.court.courtname,
+      bookingDetail.courtTime.time.timeslot,
+      bookingDetail.createdAt.toLocaleString() // Output: "6/8/2024, 7:06:33 PM"
+    );
+
+    res.status(201).json({
+      message: "Your Booking created successfully!",
+      booking: newBooking,
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
     console.log(error.message);
