@@ -81,10 +81,11 @@ const postBooking = async (req, res) => {
 const getBookingByUserID = async (req, res) => {
   try {
     //get userID from token
-    const decoded = decodeToken(req.cookies.token);
-    const userID = decoded.UserID;
+    // const decoded = decodeToken(req.cookies.token);
+    // const userID = decoded.UserID;
 
-    const booking = await BookingModel.find({ user: userID })
+    //get userID from params
+    const booking = await BookingModel.find({ user: req.params.id })
       .populate("user")
       .populate({
         // populate the courtTime field inside the booking

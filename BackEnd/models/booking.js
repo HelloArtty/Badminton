@@ -8,14 +8,15 @@ const bookingSchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     courtTime: {
       type: Schema.Types.ObjectId,
       ref: "CourtTime",
+      required: true,
     },
   },
-  { Timestamp: true }
+  { timestamps: true }
 );
-
 const Booking = model("Booking", bookingSchema);
 module.exports = Booking;
