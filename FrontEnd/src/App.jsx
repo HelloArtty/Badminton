@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Booking from './pages/Booking';
 import Court from './pages/Court';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import Register from './pages/Register';
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/booking' element={<Booking />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path="/court/:courtId" element={<Court />} />
         
       </Routes>
