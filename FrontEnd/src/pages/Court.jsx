@@ -153,7 +153,7 @@ const CourtDetail = () => {
                         {bookedUser ? (
                             <p className="mt-2">
                                 จองโดย: {bookedUser}
-                                จองเมื่อ
+                                จองเมื่อ: 
                             </p>
 
                         ) : (

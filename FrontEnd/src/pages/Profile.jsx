@@ -28,9 +28,9 @@ const MyBookings = () => {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        date.setHours(date.getHours() - 7);
+        date.setHours(date.getHours());
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-        return date.toLocaleDateString('th-TH', options);
+        return date.toLocaleDateString('en-EN', options);
     };
     
     const handleCancelBooking = async (bookingId) => {
@@ -83,9 +83,9 @@ const MyBookings = () => {
                     {userBookings.map((booking, index) => (
                         <li key={index} className="mb-4 p-4 border rounded">
                             <div><strong>Court Name:</strong> {booking.courtTime.court.courtname}</div>
-                            <div><strong>Timeslot:</strong> {booking.courtTime.time.timeslot}</div>
-                            <div><strong>Bookig ID:</strong> {booking._id}</div>
-                            <div><strong>Created At:</strong> {formatDate(booking.createdAt)}</div>
+                            <div><strong>Time:</strong> {booking.courtTime.time.timeslot}</div>
+                            {/* <div><strong>Bookig ID:</strong> {booking._id}</div> */}
+                            <div><strong>Booking :</strong> {formatDate(booking.createdAt)}</div>
                             <button
                                 className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
                                 onClick={() => handleCancelBooking(booking._id)}
