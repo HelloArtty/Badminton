@@ -60,7 +60,7 @@ function Register() {
             };
             const result = await AxiosLib.post('/backend/auth/register', createNewUser);
             console.log(result);
-            if (result.status === 201) {
+            if (result.status === 200) {
                 return (window.location.href = '/login');
             }
         } catch (error) {

@@ -68,7 +68,7 @@ const MyBookings = () => {
                         </>
                     )}
                 </div>
-                <h2 className="text-2xl font-bold text-center mb-6">Your Bookings</h2>
+                <h2 className="text-2xl font-bold text-center mb-6">Your Booking</h2>
                 <div className="flex justify-center">
                     {userBookings.length > 0 ? (
                         userBookings.map((booking) => (
