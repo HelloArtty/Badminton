@@ -60,7 +60,7 @@ function Booking() {
     return (
         <>
             {showNavbar && <Navbar />}
-            <div className="min-h-screen bg-amber-100 flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-emerald-200 flex flex-col items-center justify-center">
             <h1 className="text-4xl font-bold mt-4 mb-6">Booking</h1>
                 {countdown > 0 ? (
                     <>
@@ -72,9 +72,9 @@ function Booking() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-5">
                         {['Court 1', 'Court 2', 'Court 3', 'Court 4'].map((court, index) => (
                             <Link to={`/court/${index + 1}`} key={index}>
-                                <div className="bg-white rounded-l p-6">
-                                    <h2 className="text-xl font-semibold text-center">{court}</h2>
-                                    <div className="h-84 bg-green-100 flex items-center justify-center rounded-lg mb-4">
+                                <div className="bg-emerald-100 rounded-l p-6">
+                                    <h2 className="text-2xl mb-4 font-semibold text-center">{court}</h2>
+                                    <div className="h-84 bg-emerald-100 flex items-center justify-center rounded-lg mb-4">
                                         <img className="h-[450px] w-[300px] object-cover "
                                             src="../src/assets/badminton.jpg" alt="Court" />
                                     </div>

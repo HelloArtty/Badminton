@@ -10,7 +10,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 const TimeButton = ({ time, isSelected, onClick }) => (
     <button
         onClick={onClick}
-        className={`px-6 py-3 rounded-lg ${isSelected ? 'bg-blue-500 text-white' : 'bg-white text-blue-500 border border-blue-500'}`}>
+        className={`px-6 py-3 rounded-lg ${isSelected ? 'bg-emerald-500 text-white' : 'bg-white text-emerald-500 border border-emerald-500'}`}>
         {time.label}
     </button>
 );
@@ -137,7 +137,7 @@ const CourtDetail = () => {
             <Navbar />
             <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
                 <button
-                    className="mb-6 px-4 py-2 bg-blue-500 text-white rounded-lg self-start"
+                    className="mb-6 px-4 py-2 bg-emerald-500 text-white rounded-lg self-start"
                     onClick={() => navigate(-1)}
                 >
                     Back
@@ -163,7 +163,7 @@ const CourtDetail = () => {
                     <div className="flex flex-col md:ml-8 w-full md:w-1/2 h-full ">
                         <h2 className="text-2xl font-semibold mb-4 ">{`${courtName} at ${times.find(t => t.id === selectedTime).label}`}</h2>
                         {bookingStatus && (
-                            <p className={`mt-4 ${bookingStatus.includes('success') ? 'text-green-500' : 'text-red-500'}`}>
+                            <p className={`mt-4 ${bookingStatus.includes('success') ? 'text-emerald-500' : 'text-red-500'}`}>
                                 {bookingStatus}
                             </p>
                         )}
@@ -182,7 +182,7 @@ const CourtDetail = () => {
                         )}
                         <div className="flex justify-center">
                             <button
-                                className={`px-6 py-3 w-3/4 mt-4 sm:mt-40 rounded-lg ${bookings.some(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime) ? 'bg-gray-400 text-gray-600 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+                                className={`px-6 py-3 w-3/4 mt-4 sm:mt-40 rounded-lg ${bookings.some(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime) ? 'bg-gray-400 text-gray-600 cursor-not-allowed' : 'bg-emerald-500 text-white'}`}
                                 onClick={handleBooking}
                                 disabled={bookings.some(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime)}
                             >
