@@ -6,7 +6,6 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
 const user = JSON.parse(localStorage.getItem('user'));
-// console.log(user);
 
 const TimeButton = ({ time, isSelected, onClick }) => (
     <button
@@ -16,11 +15,16 @@ const TimeButton = ({ time, isSelected, onClick }) => (
     </button>
 );
 
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    return date.toLocaleDateString('en-EN', options);
+};
+
 const CourtDetail = () => {
     const { courtId } = useParams();
     const navigate = useNavigate();
 
-    // Array of court ID mappings
     const courtMapping = [
         { id: '1', objectId: '6647852a857c0aeaf72efcd3', name: 'Court 1' },
         { id: '2', objectId: '6662abbc058eb838216cf71c', name: 'Court 2' },
@@ -28,7 +32,6 @@ const CourtDetail = () => {
         { id: '4', objectId: '6662af35d1522f6cb4db27fd', name: 'Court 4' }
     ];
 
-    // Find the court object based on the provided courtId
     const court = courtMapping.find(c => c.id === courtId);
     const courtName = court ? court.name : `Court ${courtId}`;
     const courtObjectId = court ? court.objectId : null;
@@ -58,7 +61,6 @@ const CourtDetail = () => {
             try {
                 const response = await axios.get('http://localhost:5000/backend/data/booking-all');
                 setBookings(response.data);
-                // console.log(response.data);
             } catch (error) {
                 console.error('Error fetching bookings:', error);
                 Swal.fire({
@@ -79,12 +81,12 @@ const CourtDetail = () => {
                 return;
             }
             const confirmed = await Swal.fire({
-                title: 'ยืนยันการจอง',
-                text: 'คุณต้องการที่จะทำการจองหรือไม่?',
+                title: 'Confirm Booking',
+                text: 'Do you want to confirm the booking?',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'ใช่, ฉันต้องการจอง',
-                cancelButtonText: 'ไม่, ฉันต้องการยกเลิก',
+                confirmButtonText: 'Yes, I want to book',
+                cancelButtonText: 'No, I want to cancel',
             });
             if (confirmed.isConfirmed) {
                 const response = await axios.post('http://localhost:5000/backend/data/add-booking', {
@@ -96,24 +98,39 @@ const CourtDetail = () => {
                 setBookingStatus(response.data);
                 Swal.fire({
                     icon: 'success',
-                    title: 'การจองสำเร็จ',
-                    text: 'ขอบคุณสำหรับการใช้บริการ',
+                    title: 'Booking Successful',
+                    text: 'Thank you for using our service',
                     showConfirmButton: false,
                     timer: 2500
                 });
                 navigate("/profile");
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'การจองผิดพลาด',
-                text: 'หากท่านทำการจองแล้วจะไม่สามารถจองซ้ำได้จนกว่าจะยกเลิกการจอง'
-            });
+            if (error.response && error.response.status === 423) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Booking Error',
+                    text: 'Court has been booked by others.'
+                });
+            } else if (error.response && error.response.status === 400) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Booking Error',
+                    text: 'User can book only one court at a time.'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Booking Error',
+                    text: 'An unexpected error occurred. Please try again later.'
+                });
+            }
         }
     };
 
-    const bookedUser = bookings.find(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime)?.user.username;
-    console.log(bookedUser);
+    const bookedInfo = bookings.find(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime);
+    const bookedUser = bookedInfo?.user.username;
+    const bookingCreatedAt = bookedInfo ? formatDate(bookedInfo.createdAt) : null;
 
     return (
         <>
@@ -123,16 +140,16 @@ const CourtDetail = () => {
                     className="mb-6 px-4 py-2 bg-blue-500 text-white rounded-lg self-start"
                     onClick={() => navigate(-1)}
                 >
-                    กลับ
+                    Back
                 </button>
                 <h1 className="text-4xl font-bold mb-6">{courtName}</h1>
-                <div className="flex flex-col md:flex-row items-center md:items-start bg-white shadow-lg rounded-lg p-8">
-                    <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
-                        <div className="h-64 w-96 bg-gray-300 flex items-center justify-center rounded-lg mb-4">
+                <div className="flex flex-col md:flex-row items-center md:items-start bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
+                    <div className="flex flex-col  items-center md:items-start mb-6 md:mb-0 w-full md:w-1/2">
+                        <div className="h-64 w-full bg-gray-300 flex items-center justify-center rounded-lg mb-4">
                             <img className="h-full w-full object-cover rounded-lg"
                                 src="https://www.kmutt.ac.th/wp-content/uploads/2020/09/MG_0489-scaled.jpg" alt="Court" />
                         </div>
-                        <div className="flex space-x-4">
+                        <div className="flex space-x-4 w-full justify-center ">
                             {times.map((time, index) => (
                                 <TimeButton
                                     key={index}
@@ -143,8 +160,8 @@ const CourtDetail = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="flex flex-col md:ml-8">
-                        <h2 className="text-2xl font-semibold mb-4">{`${courtName} at ${times.find(t => t.id === selectedTime).label}`}</h2>
+                    <div className="flex flex-col md:ml-8 w-full md:w-1/2 h-full ">
+                        <h2 className="text-2xl font-semibold mb-4 ">{`${courtName} at ${times.find(t => t.id === selectedTime).label}`}</h2>
                         {bookingStatus && (
                             <p className={`mt-4 ${bookingStatus.includes('success') ? 'text-green-500' : 'text-red-500'}`}>
                                 {bookingStatus}
@@ -152,20 +169,26 @@ const CourtDetail = () => {
                         )}
                         {bookedUser ? (
                             <p className="mt-2">
-                                จองโดย: {bookedUser}
-                                จองเมื่อ: 
+                                <strong>Booked by:</strong> {bookedUser}
+                                <br />
+                                <strong>Booked on:</strong> {bookingCreatedAt}
                             </p>
-
                         ) : (
-                            <p className="mt-2">ยังไม่มีคนจอง</p>
+                            <p className="mt-2">
+                                <strong>Booked by:</strong> No one has booked.
+                                <br />
+                                <strong>Booked on:</strong> -
+                            </p>
                         )}
-                        <button
-                            className={`px-6 py-3 rounded-lg ${bookings.some(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime) ? 'bg-gray-400 text-gray-600 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
-                            onClick={handleBooking}
-                            disabled={bookings.some(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime)}
-                        >
-                            จอง
-                        </button>
+                        <div className="flex justify-center">
+                            <button
+                                className={`px-6 py-3 w-3/4 mt-4 sm:mt-40 rounded-lg ${bookings.some(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime) ? 'bg-gray-400 text-gray-600 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+                                onClick={handleBooking}
+                                disabled={bookings.some(booking => booking.courtTime.court._id === courtObjectId && booking.courtTime.time._id === selectedTime)}
+                            >
+                                Book
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

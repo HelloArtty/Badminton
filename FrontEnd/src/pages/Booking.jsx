@@ -22,7 +22,7 @@ function Booking() {
             countDownDate13.setHours(13, 0, 0, 0);
 
             let countDownDate20 = new Date();
-            countDownDate20.setHours(20, 0, 0, 0);
+            countDownDate20.setHours(23, 0, 0, 0);
 
             if (now >= countDownDate20) {
                 countDownDate13.setDate(countDownDate13.getDate() + 1);
@@ -34,7 +34,7 @@ function Booking() {
             }
         };
 
-        setNextCountdown(); 
+        setNextCountdown();
 
         const timer = setInterval(() => {
             const now = new Date().getTime();
@@ -42,7 +42,7 @@ function Booking() {
             setCountdown(distance);
 
             if (distance <= 0) {
-                setNextCountdown(); 
+                setNextCountdown();
             }
         }, 1000);
 
@@ -54,29 +54,30 @@ function Booking() {
         const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((time % (1000 * 60)) / 1000);
 
-        return `${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+        return `${hours} hours ${minutes} minutes ${seconds} seconds`;
     };
 
     return (
         <>
             {showNavbar && <Navbar />}
-            <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-amber-100 flex flex-col items-center justify-center">
+            <h1 className="text-4xl font-bold mt-4 mb-6">Booking</h1>
                 {countdown > 0 ? (
                     <>
-                        <h2 className="text-4xl mb-4">โปรดรอ...</h2>
-                        <p>ยังไม่ถึงเวลาที่สามารถจองได้</p>
+                        <h2 className="text-4xl mb-4">Waiting...</h2>
+                        <p>It's not yet time to book.</p>
                         <p>{formatTime(countdown)}</p>
                     </>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-5">
                         {['Court 1', 'Court 2', 'Court 3', 'Court 4'].map((court, index) => (
                             <Link to={`/court/${index + 1}`} key={index}>
-                                <div className="bg-white shadow-lg rounded-lg p-6">
-                                    <div className="h-84 bg-green-100 flex items-center justify-center rounded-lg mb-4">
-                                        <img className="h-[300px] w-[300px] object-cover rounded-lg"
-                                            src="https://www.kmutt.ac.th/wp-content/uploads/2020/09/MG_0489-scaled.jpg" alt="Court" />
-                                    </div>
+                                <div className="bg-white rounded-l p-6">
                                     <h2 className="text-xl font-semibold text-center">{court}</h2>
+                                    <div className="h-84 bg-green-100 flex items-center justify-center rounded-lg mb-4">
+                                        <img className="h-[450px] w-[300px] object-cover "
+                                            src="../src/assets/badminton.jpg" alt="Court" />
+                                    </div>
                                 </div>
                             </Link>
                         ))}

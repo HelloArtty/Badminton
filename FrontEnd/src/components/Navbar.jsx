@@ -5,14 +5,12 @@ import { AxiosLib } from '../lib/axios';
 
 const Navbar = () => {
     const [user, setUser] = useState(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // State for controlling dropdown visibility
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('user'));
-        console.log('Stored user:', storedUser); // Debugging: Check the stored user
         setUser(storedUser);
     }, []);
-
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleLogout = async () => {
         try {
@@ -35,50 +33,30 @@ const Navbar = () => {
         <nav className="bg-gray-800 p-4">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex items-center">
-                    <Link to="/booking" className="text-white font-bold py-2 px-4 rounded">BadLink</Link>
-                    <Link to="/booking" className="text-white font-bold py-2 px-4 rounded">Booking</Link>
+                    <Link to="/booking" className="text-white font-bold py-2 px-4 rounded">Badminton Link</Link>
                 </div>
 
                 <div className="flex items-center">
-                    <div className="hidden sm:flex items-center space-x-4">
-                        {user ? (
-                            <>
-                                <span className="text-white">Welcome, {user.username}</span>
-                                <Link to="/profile" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Profile</Link>
-                                <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Log Out</button>
-                            </>
-                        ) : (
-                            <Link to="/login" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Log In</Link>
-                        )}
-                    </div>
-
-                    <div className="sm:hidden">
-                        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none">
-                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                            </svg>
-                        </button>
-                    </div>
+                    {user && (
+                        <>
+                            <span className="text-white mr-2">{user.username}</span>
+                            <div className="relative">
+                                <img onClick={() => setIsMenuOpen(!isMenuOpen)} src={user.img} className="w-12 h-12 rounded-full border-2 border-gray-300 cursor-pointer" alt="User Avatar" />
+                                {isMenuOpen && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                                        <Link to="/profile" className="flex px-4 justify-center py-2 text-gray-800 hover:bg-gray-200">My Booking</Link>
+                                        <Link to="/booking" className="flex px-4 justify-center py-2 text-gray-800 hover:bg-gray-200">Booking</Link>
+                                        <button onClick={handleLogout} className="w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">Log Out</button>
+                                    </div>
+                                )}
+                            </div>
+                        </>
+                    )}
+                    {!user && (
+                        <Link to="/login" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Log In</Link>
+                    )}
                 </div>
             </div>
-
-            {/* Responsive Menu */}
-            {isMenuOpen && (
-                <div className="sm:hidden mt-2">
-                    <div className="container mx-auto flex flex-col space-y-4">
-                        {user && (
-                            <>
-                                <span className="text-white">Welcome, {user.username}</span>
-                                <Link to="/profile" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Profile</Link>
-                                <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Log Out</button>
-                            </>
-                        )}
-                        {!user && (
-                            <Link to="/login" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Log In</Link>
-                        )}
-                    </div>
-                </div>
-            )}
         </nav>
     );
 };

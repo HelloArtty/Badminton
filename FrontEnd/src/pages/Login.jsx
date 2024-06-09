@@ -66,10 +66,10 @@ function Login() {
                 <div className="bg-white w-full md:w-1/2 p-8 min-h-screen flex items-center justify-center ">
                     <div className="max-w-md bg-white p-8 w-full flex flex-col justify-center">
                         <h2 className="text-2xl font-bold mb-2">
-                            เข้าสู่ระบบ
+                            Login
                         </h2>
                         <h3 className="text-sm text-gray-600 mb-4">
-                            ยินดีต้อนรับ! โปรดกรอกข้อมูลอีเมล์และรหัสผ่านเพื่อเข้าสู่ระบบ
+                        Welcome! Please fill email and password to login into your account.
                         </h3>
                         <form onSubmit={handleSubmit}>
                             {/* Email */}
