@@ -58,7 +58,7 @@ const CourtDetail = () => {
             try {
                 const response = await axios.get('http://localhost:5000/backend/data/booking-all');
                 setBookings(response.data);
-                console.log(response.data);
+                // console.log(response.data);
             } catch (error) {
                 console.error('Error fetching bookings:', error);
                 Swal.fire({

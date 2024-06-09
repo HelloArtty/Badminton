@@ -30,6 +30,7 @@ function Login() {
         try {
             const result = await AxiosLib.post('/backend/auth/log-in', { email: login.email, password: login.password })
             if (result.status === 200)
+                localStorage.setItem('user', JSON.stringify(result.data.user));
                 window.location.href = '/booking'
         } catch (error) {
             Swal.fire({

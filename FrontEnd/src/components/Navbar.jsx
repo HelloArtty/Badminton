@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AxiosLib } from '../lib/axios';
 
 const Navbar = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        console.log('Stored user:', storedUser); // Debugging: Check the stored user
+        setUser(storedUser);
+    }, []);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -29,7 +35,7 @@ const Navbar = () => {
         <nav className="bg-gray-800 p-4">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex items-center">
-                    <Link to="#" className="text-white font-bold py-2 px-4 rounded">BadLink</Link>
+                    <Link to="/booking" className="text-white font-bold py-2 px-4 rounded">BadLink</Link>
                     <Link to="/booking" className="text-white font-bold py-2 px-4 rounded">Booking</Link>
                 </div>
 
