@@ -44,7 +44,7 @@ const postBooking = async (req, res) => {
     const courtTimeID = courtTimeQuery._id;
     if (courtTimeQuery.isBooked) {
       return res
-        .status(400)
+        .status(423)
         .json({ message: "This court time is already booked" });
     }
 
