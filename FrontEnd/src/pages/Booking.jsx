@@ -19,7 +19,7 @@ function Booking() {
         const setNextCountdown = () => {
             let now = new Date();
             let countDownDate13 = new Date();
-            countDownDate13.setHours(13, 0, 0, 0);
+            countDownDate13.setHours(8, 0, 0, 0);
 
             let countDownDate20 = new Date();
             countDownDate20.setHours(20, 0, 0, 0);
@@ -60,7 +60,7 @@ function Booking() {
     return (
         <>
             {showNavbar && <Navbar />}
-            <div className="min-h-screen flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
                 {countdown > 0 ? (
                     <>
                         <h2 className="text-6xl mb-4 font-semibold">Waiting...</h2>
@@ -74,11 +74,11 @@ function Booking() {
                             {["Court 1", "Court 2", "Court 3", "Court 4"].map(
                                 (court, index) => (
                                     <Link to={`/court/${index + 1}`} key={index}>
-                                        <div className="bg-red-400 rounded-l p-6">
+                                        <div className="isolate aspect-video rounded-xl bg-emerald-200/20 ring-1 ring-black/5 shadow-xl p-6">
                                             <h2 className="text-2xl mb-4 font-semibold text-center">
                                                 {court}
                                             </h2>
-                                            <div className="h-84 bg-emerald-100 flex items-center justify-center rounded-lg mb-4">
+                                            <div className="h-84 bg-emerald-100 flex items-center justify-center rounded-xl mb-4">
                                                 <img
                                                     className="h-[450px] w-[300px] object-cover "
                                                     src="../src/assets/badminton.jpg"

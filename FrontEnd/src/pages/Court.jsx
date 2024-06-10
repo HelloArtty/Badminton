@@ -51,7 +51,7 @@ const CourtDetail = () => {
             const currentTime = new Date();
             const currentHour = currentTime.getHours();
             console.log(currentHour)
-            if (currentHour < 13) {
+            if (currentHour < 8) {
                 navigate("/booking");
             }
         };
@@ -138,7 +138,7 @@ const CourtDetail = () => {
     return (
         <>
             <Navbar />
-            <div className="h-full bg-gray-100 flex flex-col items-center justify-center p-6">
+            <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
                 <button
                     className="mb-6 px-4 py-2 bg-emerald-600 text-white rounded-lg self-start"
                     onClick={() => navigate(-1)}
