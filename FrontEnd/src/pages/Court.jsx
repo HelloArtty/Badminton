@@ -63,7 +63,7 @@ const CourtDetail = () => {
       const currentTime = new Date();
       const currentHour = currentTime.getHours();
       console.log(currentHour);
-      if (currentHour < 8) {
+      if (currentHour < 13) {
         //13
         navigate("/booking");
         Swal.fire({

@@ -19,7 +19,7 @@ function Booking() {
     const setNextCountdown = () => {
       let now = new Date();
       let countDownDate13 = new Date();
-      countDownDate13.setHours(8, 0, 0, 0); //12,31
+      countDownDate13.setHours(13, 0, 0, 0);
 
       let countDownDate20 = new Date();
       countDownDate20.setHours(23, 59, 0, 0);
