@@ -74,7 +74,7 @@ function Booking() {
                             {["Court 1", "Court 2", "Court 3", "Court 4"].map(
                                 (court, index) => (
                                     <Link to={`/court/${index + 1}`} key={index}>
-                                        <div className="isolate aspect-video rounded-xl bg-zinc-400/20 ring-1 ring-black/5 shadow-xl p-6">
+                                        <div className="isolate aspect-video rounded-xl bg-zinc-200/20 ring-1 ring-black/5 shadow-xl p-6">
                                             <h2 className="text-2xl mb-4 font-semibold text-center">
                                                 {court}
                                             </h2>

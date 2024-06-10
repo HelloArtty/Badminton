@@ -56,7 +56,7 @@ function Login() {
                             </h1>
                             <h3 className="text-sm text-gray-200  mb-2">
                                 We're thrilled to see you again. Your return means a lot to us, and we're excited to continue our journey together.
-                                Dive back in and explore what's new since your last visit. 
+                                Dive back in and explore what's new since your last visit.
                             </h3>
 
                         </div>
@@ -101,7 +101,7 @@ function Login() {
                             </button>
                         </form>
                         <p className="mt-4 text-center text-sm">
-                            Already have an account? &nbsp;
+                            Don’t have an account? &nbsp;
                             <Link className="text-emerald-600 hover:underline" to="/register">
                                 Create an account
                             </Link>

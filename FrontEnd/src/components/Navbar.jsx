@@ -53,7 +53,7 @@ const Navbar = () => {
                   alt="User Avatar"
                 />
                 {isMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                     <Link
                       to="/profile"
                       className="flex px-4 justify-center py-2 text-gray-800 hover:bg-gray-200"
@@ -73,6 +73,7 @@ const Navbar = () => {
                       Log Out
                     </button>
                   </div>
+
                 )}
               </div>
             </>
