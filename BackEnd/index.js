@@ -37,6 +37,7 @@ app.use(
 
 // Schedule the task to run at 12 PM every day
 cron.schedule("0 0 * * *", async () => {
+  //ss 39 12 * * *
   try {
     // Delete all bookings
     const result = await BookingModel.deleteMany({});
