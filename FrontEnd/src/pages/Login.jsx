@@ -31,7 +31,7 @@ function Login() {
             const result = await AxiosLib.post('/backend/auth/log-in', { email: login.email, password: login.password })
             if (result.status === 200)
                 localStorage.setItem('user', JSON.stringify(result.data.user));
-                window.location.href = '/booking'
+            window.location.href = '/booking'
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -49,15 +49,14 @@ function Login() {
                     <div className="p-8 min-h-screen items-center justify-center flex">
                         <div className="max-w-md p-8 text-center">
                             <h2 className="text-2xl text-gray-100 mb-2">
-                                Welcome to
+                                Welcome back to
                             </h2>
                             <h1 className="text-8xl text-white font-bold mb-3">
                                 BadLink
                             </h1>
                             <h3 className="text-sm text-gray-200  mb-2">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Itaque incidunt id a animi ab, minus,
-                                ipsa accusantium doloribus vero cupiditate praesentium exercitationem ut repellendus minima?
+                                We're thrilled to see you again. Your return means a lot to us, and we're excited to continue our journey together.
+                                Dive back in and explore what's new since your last visit. 
                             </h3>
 
                         </div>
@@ -69,7 +68,7 @@ function Login() {
                             Login
                         </h2>
                         <h3 className="text-sm text-gray-600 mb-4">
-                        Welcome! Please fill email and password to login into your account.
+                            Welcome! Please fill email and password to login into your account.
                         </h3>
                         <form onSubmit={handleSubmit}>
                             {/* Email */}

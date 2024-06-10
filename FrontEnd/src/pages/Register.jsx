@@ -84,9 +84,8 @@ function Register() {
                                 BadLink
                             </h1>
                             <h3 className="text-sm text-gray-200  mb-2">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Itaque incidunt id a animi ab, minus,
-                                ipsa accusantium doloribus vero cupiditate praesentium exercitationem ut repellendus minima?
+                                We're excited to have you join us. By registering,
+                                you're taking the first step towards an enriching experience filled with opportunities to connect, learn, and grow.
                             </h3>
 
                         </div>
@@ -98,8 +97,7 @@ function Register() {
                             Create an account
                         </h2>
                         <h3 className="text-sm text-gray-600 mb-4">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Itaque incidunt id a animi ab.
+                        Welcome! Please fill in your username, email, and password to register your account. 
                         </h3>
                         <form onSubmit={handleSubmit}>
                             {/* Username */}
