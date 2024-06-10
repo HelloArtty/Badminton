@@ -23,7 +23,7 @@ const userSchema = new Schema(
     img: {
       type: String,
       default:
-        "https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png",
+        "https://media1.tenor.com/m/ovWTVvG3VBwAAAAd/mr-fresh-mr-fresh-multiverse.gif",
     },
   },
   { Timestamp: true }
