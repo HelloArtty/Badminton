@@ -146,7 +146,7 @@ const CourtDetail = () => {
                     Back
                 </button>
                 <h1 className="text-4xl font-bold mb-6">{courtName}</h1>
-                <div className="flex flex-col md:flex-row items-center md:items-start bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
+                <div className="flex flex-col md:flex-row items-center md:items-start bg-white/20 ring-1 ring-black/5 shadow-lg rounded-lg p-8 w-full max-w-4xl">
                     <div className="flex flex-col  items-center md:items-start mb-6 md:mb-0 w-full md:w-1/2">
                         <div className="h-64 w-full bg-gray-300 flex items-center justify-center rounded-lg mb-4">
                             <img className="h-full w-full object-cover rounded-lg"
