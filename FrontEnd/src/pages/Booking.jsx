@@ -22,7 +22,7 @@ function Booking() {
             countDownDate13.setHours(8, 0, 0, 0);
 
             let countDownDate20 = new Date();
-            countDownDate20.setHours(20, 0, 0, 0);
+            countDownDate20.setHours(23, 59, 0, 0);
 
             if (now >= countDownDate20) {
                 countDownDate13.setDate(countDownDate13.getDate() + 1);
