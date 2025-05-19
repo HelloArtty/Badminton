@@ -1,6 +1,9 @@
-# 🏸 BADMINTON LINK
+<h1 align="center"> 🏸 BADMINTON LINK </h1>
 
-*Elevate Your Game, Book Courts Effortlessly*
+<br/>
+<p align="center">Elevate Your Game, Book Courts Effortlessly</p>
+
+<br/>
 
 <p align="center">
   <img src="https://img.shields.io/badge/last%20commit-may%202025-343a40?style=for-the-badge" />
@@ -8,10 +11,10 @@
   <img src="https://img.shields.io/badge/languages-3-blue?style=for-the-badge" />
 </p>
 
----
+<br/>
 
-### 🔧 Built with the tools and technologies:
-
+<p align="center">🔧 Built with the tools and technologies:</p>
+<br/>
 <p align="center">
   <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" />
   <img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white" />
@@ -29,6 +32,7 @@
   <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white" />
 </p>
 
+
 ---
 
 ## 📚 Table of Contents
@@ -41,8 +45,6 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Usage](#usage)
-  - [Testing](#testing)
-- [Contact](#contact)
 - [Contributors](#contributors)
 
 ---
@@ -146,29 +148,9 @@ npm run dev
 
 ---
 
-### 🧪 Testing
-
-Badminton uses the **Jest** test framework.
-
-Run the test suite with:
-
-```bash
-npm test
-```
-
-> ℹ️ Replace with your actual test framework if different.
-
----
-
-## 📫 Contact
-
-For questions, suggestions, or contributions, feel free to open an issue or submit a pull request on GitHub.
-
----
-
 ## 🤝 Contributors
 
-- **Chaithawat**
-- **Warit**
+- [@Chaithawat](https://www.github.com/HelloArtty)
+- [@Warit](https://github.com/WaritTeerapong)
 
 ---
